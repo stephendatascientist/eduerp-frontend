@@ -1,4 +1,4 @@
-import { authHeader } from '../helpers'
+import { authHeader, history } from '../helpers'
 
 const apiUrl = 'http://localhost:8000'
 
@@ -8,8 +8,8 @@ const login = (username, password) => {
     urlencoded.append("client_id", "GymQi95Jv3auhvPhOOHrpeN9BXBgRoUlaQEA0r7Z");
     urlencoded.append("client_secret", "jtSNNbU8TwL4bPWw2x3yszLUZdTQ5LN7kCxCceS43P6IHCoOrgD8ymr6mGTpMkngf89yEn6Vx6beLs3RvppU0wfCUMZJVrRP30pBp1DAzefTuZvOr2z0Vt64W3tON61r");
     urlencoded.append("grant_type", "password");
-    urlencoded.append("username", "admin");
-    urlencoded.append("password", "admin");
+    urlencoded.append("username", username);
+    urlencoded.append("password", password);
     urlencoded.append("scope", "read write");
 
     const requestOptions = {
@@ -42,7 +42,6 @@ const handleResponse = (response) => {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
                 logout();
-                // location.reload(true);
             }
 
             const error = (data && data.message) || response.statusText;

@@ -27,6 +27,7 @@ const login = (username, password) => {
 
 const logout = () => {
     authService.logout();
+    history.push('/login');
     return { type: authConstants.LOGOUT };
 }
 

@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { connect } from 'react-redux';
 import {
   CBadge,
   CDropdown,
@@ -6,10 +7,18 @@ import {
   CDropdownMenu,
   CDropdownToggle,
   CImg
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+} from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { authActions } from '../actions';
 
-const TheHeaderDropdown = () => {
+const TheHeaderDropdown = (props) => {
+
+  const handleLogout = (e) => {
+    console.log(e);
+    const { dispatch } = props;
+    dispatch(authActions.logout());
+  }
+
   return (
     <CDropdown
       inNav
@@ -80,13 +89,21 @@ const TheHeaderDropdown = () => {
           <CBadge color="primary" className="mfs-auto">42</CBadge>
         </CDropdownItem>
         <CDropdownItem divider />
-        <CDropdownItem>
+        <CDropdownItem onClick={handleLogout}>
           <CIcon name="cil-lock-locked" className="mfe-2" />
-          Lock Account
+          Logout
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>
   )
 }
 
-export default TheHeaderDropdown
+const mapStateToProps = (state) => ({
+  loggingIn: state.authentication
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatch
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TheHeaderDropdown)
